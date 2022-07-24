@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsitytvseries/presentation/screens/authoriser.dart';
+import 'package:jobsitytvseries/presentation/screens/main_page.dart';
 import '/constants/strings.dart';
 import '/cubit/base_cubit.dart';
 import '/data/network_services.dart';
@@ -37,6 +38,14 @@ class AppRouter {
             create: (BuildContext context) => BaseCubit(
                 repository: repository, sharedPreference: sharedPreferenceApp),
             child: const Authoriser(),
+          ),
+        );
+        case scrMainPage:
+        return SlideRightRoute(
+          page: BlocProvider(
+            create: (BuildContext context) => BaseCubit(
+                repository: repository, sharedPreference: sharedPreferenceApp),
+            child: const MainPage(),
           ),
         );
     }

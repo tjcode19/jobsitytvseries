@@ -8,3 +8,28 @@ abstract class BaseState extends Equatable {
 }
 
 class BaseInitial extends BaseState {}
+
+class BaseLoaded extends BaseState {
+  final bool? isCompleted;
+
+  const BaseLoaded({this.isCompleted});
+}
+
+class BaseLoadAnim extends BaseState {
+  final bool? isStart;
+
+  const BaseLoadAnim({this.isStart});
+}
+
+class Loading extends BaseState {
+  final bool? show;
+
+  Loading({this.show});
+}
+
+class AppError extends BaseState {
+  final bool? show;
+  final String? msg;
+
+  AppError({this.msg, this.show});
+}
