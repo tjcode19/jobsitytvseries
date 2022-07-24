@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jobsitytvseries/constants/colours.dart';
-import '/data/repository/index.dart';
+import '../data/repository.dart';
 import '/data/shared_preference.dart';
 import '/constants/enums.dart';
 

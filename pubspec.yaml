@@ -41,6 +41,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
   pin_code_fields: ^7.4.0
+  mime: ^1.0.2
 
 dev_dependencies:
   flutter_test:

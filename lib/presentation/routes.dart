@@ -5,7 +5,7 @@ import 'package:jobsitytvseries/presentation/screens/main_page.dart';
 import '/constants/strings.dart';
 import '/cubit/base_cubit.dart';
 import '/data/network_services.dart';
-import '/data/repository/index.dart';
+import '../data/repository.dart';
 import '/data/shared_preference.dart';
 import '/utils/animations.dart';
 import 'screens/splash_screen.dart';
