@@ -105,7 +105,7 @@ class ApiProvider {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
-        log('ApiProdider: $responseJson');
+        // log('ApiProdider: $responseJson');
         return responseJson;
 
       case 401:

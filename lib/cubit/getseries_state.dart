@@ -8,3 +8,11 @@ abstract class GetseriesState extends Equatable {
 }
 
 class GetseriesInitial extends GetseriesState {}
+
+class GetShowSuccess extends GetseriesState {
+  final List<Data>? getShows;
+  const GetShowSuccess({this.getShows});
+
+  @override
+  List<Object> get props => [getShows ?? []];
+}

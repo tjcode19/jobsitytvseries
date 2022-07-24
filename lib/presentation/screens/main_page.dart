@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsitytvseries/constants/colours.dart';
 import 'package:jobsitytvseries/constants/enums.dart';
+import 'package:jobsitytvseries/cubit/getseries_cubit.dart';
+import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
 import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/textinputs_widgets.dart';
+import 'package:jobsitytvseries/utils/device_utils.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -11,92 +16,129 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  List<mod.Data> showList = [];
+  List<mod.Data> mainShowList = [];
+  List<mod.Data> searchedShowList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<GetseriesCubit>(context).getShows();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MainContainer(
       backAction: () {},
-      child: Container(
-        padding: EdgeInsets.all(25.0),
-        child: Column(
-          children: [
-            Text(''),
-            ListView.separated(
-                // key: _listKey,
-                itemCount: 6,
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                separatorBuilder: (BuildContext context, int index) {
-                  return CustomLayout.msPad.sizedBoxH;
+      child: BlocListener<GetseriesCubit, GetseriesState>(
+        listenWhen: (prevState, state) {
+          var oldData;
+          var newData;
+
+          if (state is GetShowSuccess) {
+            prevState is GetShowSuccess;
+            oldData = prevState;
+            newData = state.getShows;
+          }
+          return oldData != newData;
+        },
+        listener: (context, state) {
+          if (state is GetShowSuccess) {
+            showList = state.getShows!;
+            mainShowList = showList;
+
+            setState(() {
+              showList = state.getShows!;
+              mainShowList = showList;
+            });
+          }
+        },
+        child: Container(
+          padding: EdgeInsets.all(25.0),
+          child: Column(
+            children: [
+              Text(''),
+              CustomLayout.mPad.sizedBoxH,
+              textInputField(
+                context,
+                hintTex: 'Search Name',
+                preIcon: const Icon(Icons.search_outlined),
+                onChange: (val) {
+                  onSearchTextChanged(val.toLowerCase());
                 },
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Container(
-                      height: 200,
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            child: Image.network(
-                              "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
-                            ),
-                          ),
-                          Column(
-                            children: [Text('Title'), Text('Sub title')],
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-          ],
+              ),
+              CustomLayout.xlPad.sizedBoxH,
+              SizedBox(
+                height: DeviceUtils.getScaledHeight(context, 1.0) * 0.8,
+                child: GridView.builder(
+                    // key: _listKey,
+                    itemCount: showList.length,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 2.0,
+                        childAspectRatio: 0.7,
+                        mainAxisSpacing: 2.0),
+                    itemBuilder: (BuildContext context, int index) {
+                      return items(index);
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget itemList() {
-    return ListTile(
-      dense: true,
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-      horizontalTitleGap: 10,
-      minLeadingWidth: 10,
-      leading: Image.network(
-        'https://static.tvmaze.co…m_portrait/81/202627.jpg',
-        width: 24.0,
-        height: 24.0,
-      ),
-      title: Text('e.accountName!',
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
-      subtitle: Text(''),
-      trailing: RichText(
-        text: TextSpan(
-          text: 'GBP ',
-          children: [
-            TextSpan(
-              text: '',
-              style: const TextStyle(
-                color: appPrimaryColor,
-                fontSize: 15,
+  Widget items(int index) {
+    return Card(
+      child: Stack(
+        children: [
+          Image.network(
+            showList[index].image!.medium!,
+            fit: BoxFit.fill,
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Container(
+              color: blackColor.withOpacity(0.7),
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                showList[index].name!,
+                style: TextStyle(color: whiteColour,),
               ),
             ),
-            TextSpan(
-              text: '',
-            )
-          ],
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: appPrimaryColor.withOpacity(0.5),
-            fontSize: 11,
           ),
-        ),
+        ],
       ),
-      tileColor: appPrimaryColor,
-      focusColor: appSecondaryColor,
-      onTap: () {
-        // transactionDetailsBottomSheet(context, data: e);
-      },
     );
+  }
+
+  onSearchTextChanged(String text) async {
+    searchedShowList.clear();
+
+    if (text.isEmpty) {
+      setState(() {
+        showList = mainShowList;
+      });
+      // _clearAllItems();
+      return;
+    }
+
+    for (var showDetails in mainShowList) {
+      if (showDetails.name!.toLowerCase().contains(text) ||
+          showDetails.name!.contains(text)) {
+        searchedShowList.add(showDetails);
+      }
+    }
+
+    setState(() {
+      showList = searchedShowList;
+    });
+    // _clearAllItems();
   }
 }

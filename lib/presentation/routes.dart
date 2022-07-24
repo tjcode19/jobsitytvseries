@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jobsitytvseries/cubit/getseries_cubit.dart';
+import 'package:jobsitytvseries/data/models/get_shows.dart';
 import 'package:jobsitytvseries/presentation/screens/authoriser.dart';
 import 'package:jobsitytvseries/presentation/screens/main_page.dart';
+import 'package:jobsitytvseries/presentation/screens/show_details.dart';
 import '/constants/strings.dart';
 import '/cubit/base_cubit.dart';
 import '/data/network_services.dart';
@@ -40,12 +43,37 @@ class AppRouter {
             child: const Authoriser(),
           ),
         );
-        case scrMainPage:
+      case scrMainPage:
+        return SlideRightRoute(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider<BaseCubit>(
+                lazy: false,
+                create: (BuildContext context) => BaseCubit(
+                    repository: repository,
+                    sharedPreference: sharedPreferenceApp),
+              ),
+              BlocProvider<GetseriesCubit>(
+                create: (BuildContext context) => GetseriesCubit(
+                  repository: repository,
+                  sharedPreference: sharedPreferenceApp,
+                  baseCubit: baseCubit,
+                ),
+              ),
+            ],
+            child: const MainPage(),
+          ),
+        );
+
+      case scrShowDetails:
+        var d = settings.arguments;
         return SlideRightRoute(
           page: BlocProvider(
             create: (BuildContext context) => BaseCubit(
                 repository: repository, sharedPreference: sharedPreferenceApp),
-            child: const MainPage(),
+            child: ShowDetails(
+              showDetails: d as Data,
+            ),
           ),
         );
     }

@@ -1,4 +1,30 @@
 class GetShowModel {
+  String? responseCode;
+  List<Data>? data;
+
+  GetShowModel({this.responseCode, this.data});
+
+  GetShowModel.fromJson(Map<String, dynamic> json) {
+    responseCode = json['responseCode'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['responseCode'] = this.responseCode;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Data {
   int? id;
   String? url;
   String? name;
@@ -12,18 +38,12 @@ class GetShowModel {
   String? ended;
   String? officialSite;
   Schedule? schedule;
-  Rating? rating;
-  int? weight;
-  Network? network;
-  String? webChannel;
-  String? dvdCountry;
-  Externals? externals;
   Image? image;
   String? summary;
   int? updated;
   Links? lLinks;
 
-  GetShowModel(
+  Data(
       {this.id,
       this.url,
       this.name,
@@ -37,18 +57,12 @@ class GetShowModel {
       this.ended,
       this.officialSite,
       this.schedule,
-      this.rating,
-      this.weight,
-      this.network,
-      this.webChannel,
-      this.dvdCountry,
-      this.externals,
       this.image,
       this.summary,
       this.updated,
       this.lLinks});
 
-  GetShowModel.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     url = json['url'];
     name = json['name'];
@@ -62,60 +76,38 @@ class GetShowModel {
     ended = json['ended'];
     officialSite = json['officialSite'];
     schedule = json['schedule'] != null
-        ? Schedule.fromJson(json['schedule'])
+        ? new Schedule.fromJson(json['schedule'])
         : null;
-    rating =
-        json['rating'] != null ? Rating.fromJson(json['rating']) : null;
-    weight = json['weight'];
-    network =
-        json['network'] != null ? Network.fromJson(json['network']) : null;
-    webChannel = json['webChannel'];
-    dvdCountry = json['dvdCountry'];
-    externals = json['externals'] != null
-        ? Externals.fromJson(json['externals'])
-        : null;
-    image = json['image'] != null ? Image.fromJson(json['image']) : null;
+    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
     summary = json['summary'];
     updated = json['updated'];
-    lLinks = json['_links'] != null ? Links.fromJson(json['_links']) : null;
+    lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['url'] = url;
-    data['name'] = name;
-    data['type'] = type;
-    data['language'] = language;
-    data['genres'] = genres;
-    data['status'] = status;
-    data['runtime'] = runtime;
-    data['averageRuntime'] = averageRuntime;
-    data['premiered'] = premiered;
-    data['ended'] = ended;
-    data['officialSite'] = officialSite;
-    if (schedule != null) {
-      data['schedule'] = schedule!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['url'] = this.url;
+    data['name'] = this.name;
+    data['type'] = this.type;
+    data['language'] = this.language;
+    data['genres'] = this.genres;
+    data['status'] = this.status;
+    data['runtime'] = this.runtime;
+    data['averageRuntime'] = this.averageRuntime;
+    data['premiered'] = this.premiered;
+    data['ended'] = this.ended;
+    data['officialSite'] = this.officialSite;
+    if (this.schedule != null) {
+      data['schedule'] = this.schedule!.toJson();
     }
-    if (rating != null) {
-      data['rating'] = rating!.toJson();
+    if (this.image != null) {
+      data['image'] = this.image!.toJson();
     }
-    data['weight'] = weight;
-    if (network != null) {
-      data['network'] = network!.toJson();
-    }
-    data['webChannel'] = webChannel;
-    data['dvdCountry'] = dvdCountry;
-    if (externals != null) {
-      data['externals'] = externals!.toJson();
-    }
-    if (image != null) {
-      data['image'] = image!.toJson();
-    }
-    data['summary'] = summary;
-    data['updated'] = updated;
-    if (lLinks != null) {
-      data['_links'] = lLinks!.toJson();
+    data['summary'] = this.summary;
+    data['updated'] = this.updated;
+    if (this.lLinks != null) {
+      data['_links'] = this.lLinks!.toJson();
     }
     return data;
   }
@@ -133,97 +125,9 @@ class Schedule {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['time'] = time;
-    data['days'] = days;
-    return data;
-  }
-}
-
-class Rating {
-  double? average;
-
-  Rating({this.average});
-
-  Rating.fromJson(Map<String, dynamic> json) {
-    average = json['average'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['average'] = average;
-    return data;
-  }
-}
-
-class Network {
-  int? id;
-  String? name;
-  Country? country;
-  String? officialSite;
-
-  Network({this.id, this.name, this.country, this.officialSite});
-
-  Network.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    country =
-        json['country'] != null ? Country.fromJson(json['country']) : null;
-    officialSite = json['officialSite'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    if (country != null) {
-      data['country'] = country!.toJson();
-    }
-    data['officialSite'] = officialSite;
-    return data;
-  }
-}
-
-class Country {
-  String? name;
-  String? code;
-  String? timezone;
-
-  Country({this.name, this.code, this.timezone});
-
-  Country.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    code = json['code'];
-    timezone = json['timezone'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['code'] = code;
-    data['timezone'] = timezone;
-    return data;
-  }
-}
-
-class Externals {
-  int? tvrage;
-  int? thetvdb;
-  String? imdb;
-
-  Externals({this.tvrage, this.thetvdb, this.imdb});
-
-  Externals.fromJson(Map<String, dynamic> json) {
-    tvrage = json['tvrage'];
-    thetvdb = json['thetvdb'];
-    imdb = json['imdb'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['tvrage'] = tvrage;
-    data['thetvdb'] = thetvdb;
-    data['imdb'] = imdb;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['time'] = this.time;
+    data['days'] = this.days;
     return data;
   }
 }
@@ -240,9 +144,9 @@ class Image {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['medium'] = medium;
-    data['original'] = original;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['medium'] = this.medium;
+    data['original'] = this.original;
     return data;
   }
 }
@@ -254,19 +158,19 @@ class Links {
   Links({this.self, this.previousepisode});
 
   Links.fromJson(Map<String, dynamic> json) {
-    self = json['self'] != null ? Self.fromJson(json['self']) : null;
+    self = json['self'] != null ? new Self.fromJson(json['self']) : null;
     previousepisode = json['previousepisode'] != null
-        ? Self.fromJson(json['previousepisode'])
+        ? new Self.fromJson(json['previousepisode'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (self != null) {
-      data['self'] = self!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.self != null) {
+      data['self'] = this.self!.toJson();
     }
-    if (previousepisode != null) {
-      data['previousepisode'] = previousepisode!.toJson();
+    if (this.previousepisode != null) {
+      data['previousepisode'] = this.previousepisode!.toJson();
     }
     return data;
   }
@@ -282,8 +186,8 @@ class Self {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['href'] = href;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
     return data;
   }
 }
