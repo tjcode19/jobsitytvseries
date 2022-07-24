@@ -16,3 +16,11 @@ class GetShowSuccess extends GetseriesState {
   @override
   List<Object> get props => [getShows ?? []];
 }
+
+class GetEpisodesSuccess extends GetseriesState {
+  final List<Episodes>? getEpisodes;
+  const GetEpisodesSuccess({this.getEpisodes});
+
+  @override
+  List<Object> get props => [getEpisodes?? []];
+}

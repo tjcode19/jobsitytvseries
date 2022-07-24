@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:jobsitytvseries/data/models/get_shows.dart';
 
+import 'models/get_episodes.dart';
 import 'network_services.dart';
 
 class Repository {
@@ -34,24 +35,9 @@ class Repository {
     return GetShowModel.fromJson(response);
   }
 
-  Future<GetShowModel> getEpisodes(showId) async {
+  Future<GetEpisodesModel> getEpisodes(showId) async {
     final response = await networkService?.getEpisodes(showId);
 
-    // log(response.toString());
-
-    // List<GetShowModel> _listProducts = [];
-    // if (response != null) {
-    //   for (var item in response) {
-    //     _listProducts.add(GetShowModel.fromJson(item));
-    //   }
-    // }
-
-    // inspect(_listProducts);
-
-
-
-    // log(_listProducts.toString());
-
-    return GetShowModel.fromJson(response);
+    return GetEpisodesModel.fromJson(response);
   }
 }

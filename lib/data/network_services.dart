@@ -23,9 +23,9 @@ class NetworkService {
     try {
       final response = await apiProvider.get('shows/$showId/episodes');
       if (response != []) {
-        res = {'responseCode': '00', 'data': response};
+        res = {'responseCode': '00', 'episodes': response};
       } else {
-        res = {'responseCode': '01', 'data': []};
+        res = {'responseCode': '01', 'episodes': []};
       }
     } catch (e) {
       return {'responseCode': '08', 'responseDescription': 'error dey $e'};

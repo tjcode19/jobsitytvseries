@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<GetseriesCubit>(context).getShows();
+    BlocProvider.of<GetseriesCubit>(context).getShows(page: 0);
   }
 
   @override

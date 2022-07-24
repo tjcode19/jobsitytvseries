@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:jobsitytvseries/cubit/base_cubit.dart';
+import 'package:jobsitytvseries/data/models/get_episodes.dart';
 import 'package:jobsitytvseries/data/models/get_shows.dart';
 import 'package:jobsitytvseries/data/repository.dart';
 import 'package:jobsitytvseries/data/shared_preference.dart';
@@ -47,11 +48,11 @@ class GetseriesCubit extends Cubit<GetseriesState> {
           }
         else
           {
-            emit(GetShowSuccess(getShows: apiCall.data))}
+            emit(GetEpisodesSuccess(getEpisodes: apiCall.episodes))}
       },
       onError: (error) {
         // emit(DashHomeInitial(status: 'failed'));
-        throw StateError('Get Beneficiary Failed $error');
+        throw StateError('Get Episodes Failed $error');
       },
     );
   }
