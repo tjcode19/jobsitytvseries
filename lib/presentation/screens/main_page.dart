@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsitytvseries/constants/colours.dart';
 import 'package:jobsitytvseries/constants/enums.dart';
+import 'package:jobsitytvseries/constants/strings.dart';
 import 'package:jobsitytvseries/cubit/getseries_cubit.dart';
 import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
 import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
@@ -92,28 +93,31 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget items(int index) {
-    return Card(
-      child: Stack(
-        children: [
-          Image.network(
-            showList[index].image!.medium!,
-            fit: BoxFit.fill,
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            left: 0,
-            child: Container(
-              color: blackColor.withOpacity(0.7),
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                showList[index].name!,
-                style: TextStyle(color: whiteColour,),
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, scrShowDetails, arguments: showList[index]),
+      child: Card(
+        child: Stack(
+          children: [
+            Image.network(
+              showList[index].image!.medium!,
+              fit: BoxFit.fill,
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: Container(
+                color: blackColor.withOpacity(0.7),
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  showList[index].name!,
+                  style: TextStyle(color: whiteColour,),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

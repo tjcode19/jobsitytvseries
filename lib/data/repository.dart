@@ -33,4 +33,25 @@ class Repository {
 
     return GetShowModel.fromJson(response);
   }
+
+  Future<GetShowModel> getEpisodes(showId) async {
+    final response = await networkService?.getEpisodes(showId);
+
+    // log(response.toString());
+
+    // List<GetShowModel> _listProducts = [];
+    // if (response != null) {
+    //   for (var item in response) {
+    //     _listProducts.add(GetShowModel.fromJson(item));
+    //   }
+    // }
+
+    // inspect(_listProducts);
+
+
+
+    // log(_listProducts.toString());
+
+    return GetShowModel.fromJson(response);
+  }
 }

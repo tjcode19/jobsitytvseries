@@ -35,4 +35,24 @@ class GetseriesCubit extends Cubit<GetseriesState> {
       },
     );
   }
+
+  getEpisodes(showId) async {
+    // emit(SendMoneyOtherBanks(acctName: ''));
+
+    await repository?.getEpisodes(showId).then(
+      (apiCall) => {
+        if (apiCall.responseCode != '00')
+          {
+            // emit(DashHomeInitial(status: 'failed'))
+          }
+        else
+          {
+            emit(GetShowSuccess(getShows: apiCall.data))}
+      },
+      onError: (error) {
+        // emit(DashHomeInitial(status: 'failed'));
+        throw StateError('Get Beneficiary Failed $error');
+      },
+    );
+  }
 }
