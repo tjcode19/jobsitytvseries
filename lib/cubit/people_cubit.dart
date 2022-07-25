@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:jobsitytvseries/data/models/get_people.dart';
 import 'package:jobsitytvseries/data/repository.dart';
 import 'package:jobsitytvseries/data/shared_preference.dart';
 
@@ -15,10 +16,10 @@ class PeopleCubit extends Cubit<PeopleState> {
   PeopleCubit({this.baseCubit, this.repository, this.sharedPreference})
       : super(PeopleInitial());
 
-  getShows({page = 0}) async {
+  getPeople({page = 0}) async {
     // emit(SendMoneyOtherBanks(acctName: ''));
 
-    await repository?.getShows(page).then(
+    await repository?.getPeople(page).then(
       (apiCall) => {
         if (apiCall.responseCode != '00')
           {
@@ -26,7 +27,7 @@ class PeopleCubit extends Cubit<PeopleState> {
           }
         else
           {
-            // emit(GetShowSuccess(getShows: apiCall.data))
+            emit(GetPeopleSuccess(getPeople: apiCall.people))
           }
       },
       onError: (error) {

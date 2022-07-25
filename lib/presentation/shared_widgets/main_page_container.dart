@@ -52,14 +52,14 @@ class MainContainer extends StatelessWidget {
                   shape: BoxShape.circle),
             ),
           ),
-          Container(
-            color: Colors.transparent,
-            margin: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top * 1.5,
-              left: DeviceUtils.getScaledWidth(context, 1.0) * 0.05,
-            ),
-            child: _backAction(context, backAction),
-          ),
+          // Container(
+          //   color: Colors.transparent,
+          //   margin: EdgeInsets.only(
+          //     top: MediaQuery.of(context).padding.top * 1.5,
+          //     left: DeviceUtils.getScaledWidth(context, 1.0) * 0.05,
+          //   ),
+          //   child: _backAction(context, backAction),
+          // ),
           Container(
               height: DeviceUtils.getScaledHeight(context, 1.0) -
                   (MediaQuery.of(context).padding.top * 1.5),

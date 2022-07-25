@@ -32,4 +32,19 @@ class NetworkService {
     }
     return res;
   }
+
+  Future<dynamic> getPeople(page) async {
+    dynamic res;
+    try {
+      final response = await apiProvider.get('people?page=$page');
+      if (response != []) {
+        res = {'responseCode': '00', 'people': response};
+      } else {
+        res = {'responseCode': '01', 'people': []};
+      }
+    } catch (e) {
+      return {'responseCode': '08', 'responseDescription': 'error dey $e'};
+    }
+    return res;
+  }
 }

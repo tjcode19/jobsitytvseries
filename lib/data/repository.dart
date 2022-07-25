@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:jobsitytvseries/data/models/get_shows.dart';
 
 import 'models/get_episodes.dart';
+import 'models/get_people.dart';
 import 'network_services.dart';
 
 class Repository {
@@ -39,5 +40,11 @@ class Repository {
     final response = await networkService?.getEpisodes(showId);
 
     return GetEpisodesModel.fromJson(response);
+  }
+
+  Future<GetPeopleModel> getPeople(page) async {
+    final response = await networkService?.getPeople(page);
+
+    return GetPeopleModel.fromJson(response);
   }
 }
