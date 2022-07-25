@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:jobsitytvseries/constants/colours.dart';
 import 'package:jobsitytvseries/constants/enums.dart';
 import 'package:jobsitytvseries/constants/strings.dart';
@@ -106,10 +107,19 @@ class _ShowDetailsState extends State<ShowDetails> {
                   CustomLayout.lPad.sizedBoxH,
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      showDetails!.summary!,
-                      textAlign: TextAlign.justify,
+                    child: Html(
+                      data: showDetails!.summary!,
+                      style: {
+                        "p": Style(
+                          color: appPrimaryColor,
+                          textAlign: TextAlign.justify
+                        ),
+                      },
                     ),
+                    // Text(
+                    //   showDetails!.summary!,
+                    //   textAlign: TextAlign.justify,
+                    // ),
                   ),
                 ],
               ),

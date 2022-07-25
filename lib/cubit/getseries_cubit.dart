@@ -17,7 +17,7 @@ class GetseriesCubit extends Cubit<GetseriesState> {
 
   GetseriesCubit({this.repository, this.sharedPreference, this.baseCubit}) : super(GetseriesInitial());
 
-  getShows({page =1}) async {
+  getShows({page =0}) async {
     // emit(SendMoneyOtherBanks(acctName: ''));
 
     await repository?.getShows(page).then(
