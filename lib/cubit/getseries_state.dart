@@ -12,10 +12,11 @@ class GetseriesInitial extends GetseriesState {}
 class GetShowSuccess extends GetseriesState {
   final List<Data>? getShows;
   final Set<int>? favs;
-  const GetShowSuccess({this.getShows, this.favs});
+  final bool? isLoading;
+  const GetShowSuccess({this.getShows, this.favs, this.isLoading});
 
   @override
-  List<Object> get props => [getShows ?? [], favs??[]];
+  List<Object> get props => [getShows ?? [], favs ?? [], isLoading ?? false];
 }
 
 class GetEpisodesSuccess extends GetseriesState {
@@ -23,5 +24,5 @@ class GetEpisodesSuccess extends GetseriesState {
   const GetEpisodesSuccess({this.getEpisodes});
 
   @override
-  List<Object> get props => [getEpisodes?? []];
+  List<Object> get props => [getEpisodes ?? []];
 }

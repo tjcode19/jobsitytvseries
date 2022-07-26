@@ -20,20 +20,19 @@ class GetseriesCubit extends Cubit<GetseriesState> {
       : super(GetseriesInitial());
 
   getShows({page = 0}) async {
-    // emit(SendMoneyOtherBanks(acctName: ''));
+    emit(const GetShowSuccess(isLoading: true));
     var d = await getIdOfFavShows();
+
 
     await repository?.getShows(page).then(
       (apiCall) => {
         if (apiCall.responseCode != '00')
           {
-            // emit(DashHomeInitial(status: 'failed'))
           }
         else
-          {emit(GetShowSuccess(getShows: apiCall.data, favs: d))}
+          {emit(GetShowSuccess(getShows: apiCall.data, favs: d, isLoading: false))}
       },
       onError: (error) {
-        // emit(DashHomeInitial(status: 'failed'));
         throw StateError('Get Beneficiary Failed $error');
       },
     );

@@ -13,6 +13,7 @@ import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/textinputs_widgets.dart';
 import 'package:jobsitytvseries/utils/device_utils.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class _MainPageState extends State<MainPage> {
 
   List<pop.People> peopleList = [];
   var favShow = <int?>{};
+  bool _enabled = true;
 
   @override
   void initState() {
@@ -79,22 +81,81 @@ class _MainPageState extends State<MainPage> {
                 });
               }
             },
-            child: SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 1.0) * 0.6,
-              child: GridView.builder(
-                  // key: _listKey,
-                  itemCount: showList.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 1.0,
-                      childAspectRatio: 0.7,
-                      mainAxisSpacing: 1.0),
-                  itemBuilder: (BuildContext context, int index) {
-                    return items(index);
-                  }),
-            ),
+            child: showList.isNotEmpty
+                ? SizedBox(
+                    height: DeviceUtils.getScaledHeight(context, 1.0) * 0.6,
+                    child: GridView.builder(
+                        // key: _listKey,
+                        itemCount: showList.length,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 1.0,
+                                childAspectRatio: 0.7,
+                                mainAxisSpacing: 1.0),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items(index);
+                        }),
+                  )
+                : SizedBox(
+                    height: DeviceUtils.getScaledHeight(context, 1.0) * 0.6,
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      enabled: _enabled,
+                      child: ListView.builder(
+                        itemBuilder: (_, __) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: 48.0,
+                                height: 48.0,
+                                color: Colors.white,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      width: double.infinity,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 2.0),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 2.0),
+                                    ),
+                                    Container(
+                                      width: 40.0,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        itemCount: 7,
+                      ),
+                    ),
+                  ),
           ),
           CustomLayout.mPad.sizedBoxH,
           GestureDetector(
@@ -135,33 +196,92 @@ class _MainPageState extends State<MainPage> {
                 });
               }
             },
-            child: SizedBox(
-              height: 120,
-              child: GridView.builder(
-                  // key: _listKey,
-                  scrollDirection: Axis.vertical,
-                  itemCount: peopleList.isEmpty ? 0 : 4,
-                  // shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      crossAxisSpacing: 2.0,
-                      childAspectRatio: 0.7,
-                      mainAxisSpacing: 2.0),
-                  itemBuilder: (BuildContext context, int index) {
-                    return peopleItem(index);
-                  }),
-            ),
+            child: peopleList.isNotEmpty
+                ? SizedBox(
+                    height: 120,
+                    child: GridView.builder(
+                        // key: _listKey,
+                        scrollDirection: Axis.vertical,
+                        itemCount: peopleList.isEmpty ? 0 : 4,
+                        // shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                crossAxisSpacing: 2.0,
+                                childAspectRatio: 0.7,
+                                mainAxisSpacing: 2.0),
+                        itemBuilder: (BuildContext context, int index) {
+                          return peopleItem(index);
+                        }),
+                  )
+                : SizedBox(
+                    height: 120,
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      enabled: _enabled,
+                      child: ListView.builder(
+                        itemBuilder: (_, __) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: 48.0,
+                                height: 48.0,
+                                color: Colors.white,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      width: double.infinity,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 2.0),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 2.0),
+                                    ),
+                                    Container(
+                                      width: 40.0,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        itemCount: 1,
+                      ),
+                    ),
+                  ),
           )
         ],
       ),
       floatAction: GestureDetector(
         onTap: () => Navigator.pushNamed(context, scrFavouriteShow),
         child: Container(
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: appPrimaryColor),
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
+          decoration: const BoxDecoration(
+              shape: BoxShape.circle, color: appSecondaryColor),
+          child: const Padding(
+            padding: EdgeInsets.all(18.0),
             child: Icon(
               Icons.favorite,
               color: whiteColour,
