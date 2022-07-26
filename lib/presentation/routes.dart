@@ -17,6 +17,7 @@ import '../data/repository.dart';
 import '/data/shared_preference.dart';
 import '/utils/animations.dart';
 import 'screens/episode_details.dart';
+import 'screens/home_page.dart';
 import 'screens/people_details.dart';
 import 'screens/splash_screen.dart';
 
@@ -50,7 +51,7 @@ class AppRouter {
             child: const Authoriser(),
           ),
         );
-      case scrMainPage:
+      case scrHomePage:
         return SlideRightRoute(
           page: MultiBlocProvider(
             providers: [
@@ -75,7 +76,7 @@ class AppRouter {
                 ),
               ),
             ],
-            child: const MainPage(),
+            child: const HomePage(),
           ),
         );
 

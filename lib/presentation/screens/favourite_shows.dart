@@ -8,6 +8,8 @@ import 'package:jobsitytvseries/cubit/people_cubit.dart';
 import 'package:jobsitytvseries/data/models/get_people.dart' as pop;
 import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
 import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/textinputs_widgets.dart';
 import 'package:jobsitytvseries/utils/device_utils.dart';
 
@@ -33,87 +35,82 @@ class _FavouriteShowsState extends State<FavouriteShows> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [Icon(Icons.menu)],
+    return SecuredMainContainer(
+      pageLabel: const ScreenTitle(
+        title: 'Favourite Show',
+        subTitle: 'These are your favourite shows',
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: MainContainer(
-          backAction: () {},
-          child: Column(
-            children: [
-              textInputField(
-                context,
-                hintTex: 'Enter Series Name',
-                preIcon: const Icon(Icons.search_outlined),
-                onChange: (val) {
-                  onSearchTextChanged(val.toLowerCase());
-                },
-              ),
-              CustomLayout.mPad.sizedBoxH,
-              BlocListener<GetseriesCubit, GetseriesState>(
-                listenWhen: (prevState, state) {
-                  var oldData;
-                  var newData;
-
-                  if (state is GetShowSuccess) {
-                    prevState is GetShowSuccess;
-                    oldData = prevState;
-                    newData = state.getShows;
-                  }
-                  return oldData != newData;
-                },
-                listener: (context, state) {
-                  if (state is GetShowSuccess) {
-                    showList = state.getShows!;
-                    mainShowList = showList;
-
-                    setState(() {
-                      showList = state.getShows!;
-                      mainShowList = showList;
-                      favShow = state.favs!;
-                    });
-                  }
-                },
-                child: SizedBox(
-                  height: DeviceUtils.getScaledHeight(context, 1.0) * 0.8,
-                  child: GridView.builder(
-                      // key: _listKey,
-                      itemCount: showList.length,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 1.0,
-                              childAspectRatio: 0.7,
-                              mainAxisSpacing: 1.0),
-                      itemBuilder: (BuildContext context, int index) {
-                        return items(index);
-                      }),
-                ),
-              ),
-              CustomLayout.mPad.sizedBoxH,
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(context, scrPeopleScreen),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Icon(Icons.find_in_page_outlined),
-                    Text(
-                      'Search more people',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          // color: whiteColour,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      pageLabelIcon: Container(),
+      child: Column(
+        children: [
+          textInputField(
+            context,
+            hintTex: 'Enter Series Name',
+            preIcon: const Icon(Icons.search_outlined),
+            onChange: (val) {
+              onSearchTextChanged(val.toLowerCase());
+            },
           ),
-        ),
+          CustomLayout.mPad.sizedBoxH,
+          BlocListener<GetseriesCubit, GetseriesState>(
+            listenWhen: (prevState, state) {
+              var oldData;
+              var newData;
+
+              if (state is GetShowSuccess) {
+                prevState is GetShowSuccess;
+                oldData = prevState;
+                newData = state.getShows;
+              }
+              return oldData != newData;
+            },
+            listener: (context, state) {
+              if (state is GetShowSuccess) {
+                showList = state.getShows!;
+                mainShowList = showList;
+
+                setState(() {
+                  showList = state.getShows!;
+                  mainShowList = showList;
+                  favShow = state.favs!;
+                });
+              }
+            },
+            child: SizedBox(
+              height: DeviceUtils.getScaledHeight(context, 1.0) * 0.8,
+              child: GridView.builder(
+                  // key: _listKey,
+                  itemCount: showList.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 1.0,
+                      childAspectRatio: 0.7,
+                      mainAxisSpacing: 1.0),
+                  itemBuilder: (BuildContext context, int index) {
+                    return items(index);
+                  }),
+            ),
+          ),
+          CustomLayout.mPad.sizedBoxH,
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, scrPeopleScreen),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                Icon(Icons.find_in_page_outlined),
+                Text(
+                  'Search more people',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      // color: whiteColour,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

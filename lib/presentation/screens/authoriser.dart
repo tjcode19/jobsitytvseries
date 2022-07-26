@@ -68,7 +68,9 @@ class _AuthoriserState extends State<Authoriser> {
                     CustomOtpField(
                       length: 4,
                       txtEditingController: pin,
-                      completeAction: (val) {},
+                      completeAction: (val) {
+                        pin.text = val;
+                      },
                       shape: PinCodeFieldShape.circle,
                     ),
                     CustomLayout.lPad.sizedBoxH,
@@ -86,6 +88,7 @@ class _AuthoriserState extends State<Authoriser> {
                           BlocProvider.of<BaseCubit>(context)
                               .setPin(context, pin: val);
                           BlocProvider.of<BaseCubit>(context).setFirstTimer();
+                          Navigator.popAndPushNamed(context, scrHomePage);
                         }
                       },
                       shape: PinCodeFieldShape.circle,
@@ -94,7 +97,7 @@ class _AuthoriserState extends State<Authoriser> {
                     CustomLayout.mPad.sizedBoxH,
                     GestureDetector(
                       onTap: () =>
-                          Navigator.popAndPushNamed(context, scrMainPage),
+                          Navigator.popAndPushNamed(context, scrHomePage),
                       child: Center(
                         child: RichText(
                           text: const TextSpan(
@@ -134,7 +137,7 @@ class _AuthoriserState extends State<Authoriser> {
                     ),
                     CustomLayout.lPad.sizedBoxH,
                     const Text(
-                      'You might want to protect your app from unathorised access.',
+                      'Welcome back',
                       style: TextStyle(fontSize: 17.0),
                     ),
                     CustomLayout.sPad.sizedBoxH,
@@ -142,14 +145,15 @@ class _AuthoriserState extends State<Authoriser> {
                     CustomLayout.mPad.sizedBoxH,
                     CustomOtpField(
                       length: 4,
-                      completeAction: (val) {
-                        var pin = BlocProvider.of<BaseCubit>(context).getPin();
+                      completeAction: (val) async {
+                        var pin =
+                            await BlocProvider.of<BaseCubit>(context).getPin();
 
                         if (pin == val) {
-                          Navigator.popAndPushNamed(context, scrMainPage);
+                          Navigator.popAndPushNamed(context, scrHomePage);
                         } else {
                           BlocProvider.of<BaseCubit>(context).showError(
-                              errorMsg: 'Invalid Password',
+                              errorMsg: 'Invalid PIN',
                               type: ErrorMsgType.toast,
                               toastPosition: EasyLoadingToastPosition.bottom);
                         }

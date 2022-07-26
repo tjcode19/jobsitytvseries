@@ -8,6 +8,8 @@ import 'package:jobsitytvseries/cubit/people_cubit.dart';
 import 'package:jobsitytvseries/data/models/get_people.dart' as pop;
 import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
 import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/textinputs_widgets.dart';
 import 'package:jobsitytvseries/utils/device_utils.dart';
 
@@ -31,64 +33,65 @@ class _PeopleScreenState extends State<PeopleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MainContainer(
-      backAction: () {},
-      child: Container(
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          children: [
-            textInputField(
-              context,
-              hintTex: 'Search People by Name',
-              preIcon: const Icon(Icons.search_outlined),
-              onChange: (val) {
-                onSearchTextChanged(val.toLowerCase());
-              },
-            ),
-            CustomLayout.mPad.sizedBoxH,
-            BlocListener<PeopleCubit, PeopleState>(
-              listenWhen: (prevState, state) {
-                var oldData;
-                var newData;
+    return SecuredMainContainer(
+      pageLabel: const ScreenTitle(
+        title: 'People',
+        subTitle: 'Search your favourite actor by name',
+      ),
+      pageLabelIcon: Container(),
+      child: Column(
+        children: [
+          textInputField(
+            context,
+            hintTex: 'Search People by Name',
+            preIcon: const Icon(Icons.search_outlined),
+            onChange: (val) {
+              onSearchTextChanged(val.toLowerCase());
+            },
+          ),
+          CustomLayout.mPad.sizedBoxH,
+          BlocListener<PeopleCubit, PeopleState>(
+            listenWhen: (prevState, state) {
+              var oldData;
+              var newData;
 
-                if (state is GetPeopleSuccess) {
-                  prevState is GetPeopleSuccess;
-                  oldData = prevState;
-                  newData = state.getPeople;
-                }
-                return oldData != newData;
-              },
-              listener: (context, state) {
-                if (state is GetPeopleSuccess) {
+              if (state is GetPeopleSuccess) {
+                prevState is GetPeopleSuccess;
+                oldData = prevState;
+                newData = state.getPeople;
+              }
+              return oldData != newData;
+            },
+            listener: (context, state) {
+              if (state is GetPeopleSuccess) {
+                peopleList = state.getPeople!;
+                mainList = state.getPeople!;
+
+                setState(() {
                   peopleList = state.getPeople!;
-                  mainList = state.getPeople!;
-
-                  setState(() {
-                    peopleList = state.getPeople!;
-                  });
-                }
-              },
-              child: SizedBox(
-                height: DeviceUtils.getScaledHeight(context, 1.0) * 0.85,
-                child: GridView.builder(
-                    // key: _listKey,
-                    itemCount: peopleList.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 1.0,
-                            childAspectRatio: 0.7,
-                            mainAxisSpacing: 1.0),
-                    itemBuilder: (BuildContext context, int index) {
-                      return peopleItem(index);
-                    }),
-              ),
+                });
+              }
+            },
+            child: SizedBox(
+              height: DeviceUtils.getScaledHeight(context, 1.0) * 0.85,
+              child: GridView.builder(
+                  // key: _listKey,
+                  itemCount: peopleList.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 1.0,
+                          childAspectRatio: 0.7,
+                          mainAxisSpacing: 1.0),
+                  itemBuilder: (BuildContext context, int index) {
+                    return peopleItem(index);
+                  }),
             ),
-            // CustomLayout.sPad.sizedBoxH,
-          ],
-        ),
+          ),
+          // CustomLayout.sPad.sizedBoxH,
+        ],
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const Color appPrimaryColor = Color(0xFF000000);
 Color appPrimaryColorLight = appPrimaryColor.withOpacity(0.7);
 Color appPrimaryColorLighter = appPrimaryColor.withOpacity(0.5);
-const Color appSecondaryColor = Color(0xFFbcdce7);
+const Color appSecondaryColor = Color(0xFF14AAED);
 Color appSecondaryColorLight = appSecondaryColor.withOpacity(0.6);
 
 const whiteColour = Color(0xFFFFFFFF);

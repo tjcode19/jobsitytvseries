@@ -35,6 +35,8 @@ class BaseCubit extends Cubit<BaseState> {
   void setFirstTimer({val = false}) async {
     sharedPreference!.setData(
         sharedType: spDataType.bool, fieldName: 'isFirstTime', fieldValue: val);
+
+        emit(IsFirstTimer(val: val));
   }
 
   getFirstTimer() async {
@@ -42,7 +44,7 @@ class BaseCubit extends Cubit<BaseState> {
     try {
       val = (await sharedPreference!.getSharedPrefs(
               sharedType: spDataType.bool, fieldName: 'isFirstTime') ??
-          false);
+          true);
     } catch (e) {
       showError(errorMsg: e.toString());
     }
@@ -54,8 +56,8 @@ class BaseCubit extends Cubit<BaseState> {
     sharedPreference!.setData(
         sharedType: spDataType.string, fieldName: 'pin', fieldValue: pin);
 
-    showInfo(msg: 'PIN set was successfull');
-    Navigator.popAndPushNamed(context, scrMainPage);
+    // showInfo(msg: 'PIN set was successfull');
+   
   }
 
   getPin() async {
