@@ -6,7 +6,22 @@ Jobsity TV Series Tes .
 
 Flutter application for listing TV Series .
 
-A few resources to get you started if this is your first Flutter project:
+To run this app:
+
+- Clone from repo with
+```
+git clone https://github.com/tjcode19/jobsitytvseries.git
+```
+
+- Install all dependencies
+```
+flutter pub get
+```
+
+- Run the app
+```
+flutter run
+```
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
