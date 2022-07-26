@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jobsitytvseries/constants/colours.dart';
+import 'package:jobsitytvseries/constants/strings.dart';
 import '../data/repository.dart';
 import '/data/shared_preference.dart';
 import '/constants/enums.dart';
@@ -30,21 +31,39 @@ class BaseCubit extends Cubit<BaseState> {
       emit(const BaseLoadAnim(isStart: true));
     });
   }
-  void setFirstTimer() async {
+
+  void setFirstTimer({val = false}) async {
     sharedPreference!.setData(
-        sharedType: spDataType.bool,
-        fieldName: 'isFirstTime',
-        fieldValue: false);
+        sharedType: spDataType.bool, fieldName: 'isFirstTime', fieldValue: val);
   }
 
-  Future<bool> getFirstTimer() async {
+  getFirstTimer() async {
     bool val = true;
     try {
       val = (await sharedPreference!.getSharedPrefs(
-                  sharedType: spDataType.bool, fieldName: 'isFirstTime') ==
-              null)
-          ? true
-          : false;
+              sharedType: spDataType.bool, fieldName: 'isFirstTime') ??
+          false);
+    } catch (e) {
+      showError(errorMsg: e.toString());
+    }
+
+    emit(IsFirstTimer(val: val));
+  }
+
+  setPin(context, {pin}) async {
+    sharedPreference!.setData(
+        sharedType: spDataType.string, fieldName: 'pin', fieldValue: pin);
+
+    showInfo(msg: 'PIN set was successfull');
+    Navigator.popAndPushNamed(context, scrMainPage);
+  }
+
+  getPin() async {
+    String val = "";
+    try {
+      val = await sharedPreference!.getSharedPrefs(
+              sharedType: spDataType.string, fieldName: 'pin') ??
+          "";
     } catch (e) {
       showError(errorMsg: e.toString());
     }
@@ -67,13 +86,12 @@ class BaseCubit extends Cubit<BaseState> {
     });
   }
 
-  showLoading({String? title,dismissOnTap=true}) async {
+  showLoading({String? title, dismissOnTap = true}) async {
     EasyLoading.instance.backgroundColor = appPrimaryColor;
     await EasyLoading.show(
-      status: title,
-      maskType: EasyLoadingMaskType.black,
-      dismissOnTap: dismissOnTap
-    );
+        status: title,
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: dismissOnTap);
   }
 
   hideLoading() async {
@@ -113,5 +131,4 @@ class BaseCubit extends Cubit<BaseState> {
       EasyLoading.showToast(msg, toastPosition: toastPosition);
     }
   }
-
 }

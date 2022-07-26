@@ -33,3 +33,11 @@ class AppError extends BaseState {
 
   AppError({this.msg, this.show});
 }
+
+class IsFirstTimer extends BaseState {
+  final bool? val;
+  const IsFirstTimer({this.val});
+
+  @override
+  List<Object> get props => [val??true];
+}

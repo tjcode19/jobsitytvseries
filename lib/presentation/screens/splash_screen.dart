@@ -34,14 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         listener: (context, state) {
           if (state is BaseLoaded) {
             SchedulerBinding.instance!.addPostFrameCallback((_) async {
-              var fTime =
-                  await BlocProvider.of<BaseCubit>(context).getFirstTimer();
-              if (fTime) {
-                BlocProvider.of<BaseCubit>(context).setFirstTimer();
-                Navigator.popAndPushNamed(context, scrMainPage);
-              } else {
-                Navigator.popAndPushNamed(context, scrAuthoriser);
-              }
+              Navigator.popAndPushNamed(context, scrAuthoriser);
             });
           }
           if (state is BaseLoadAnim) {
@@ -133,8 +126,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Container(
-              decoration: const BoxDecoration(
-                  color: Colors.transparent),
+              decoration: const BoxDecoration(color: Colors.transparent),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

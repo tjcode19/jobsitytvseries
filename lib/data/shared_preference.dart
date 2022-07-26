@@ -20,7 +20,7 @@ class SharedPreferenceApp {
         return prefs.getDouble(fieldName);
       case spDataType.object:
         final rawJson = prefs.getString(fieldName);
-        Map<String, dynamic> map = jsonDecode(rawJson!);
+        var map = jsonDecode(rawJson!);
         return map;
       default:
         break;
@@ -44,7 +44,7 @@ class SharedPreferenceApp {
         prefs.setDouble(fieldName, fieldValue);
         break;
       case spDataType.object:
-        prefs.setString(fieldName, jsonEncode(fieldValue.toJson()));
+        prefs.setString(fieldName, jsonEncode(fieldValue));
         break;
       default:
         break;

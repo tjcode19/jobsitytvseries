@@ -62,9 +62,9 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
       obscureText: true,
       obscuringCharacter: '*',
       obscuringWidget: Image.asset(
-        'assets/images/logo.png',
-        width: 24,
-        height: 24,
+        'assets/images/logo1.png',
+        width: 18,
+        height: 18,
       ),
       blinkWhenObscuring: true,
       animationType: AnimationType.fade,

@@ -11,6 +11,7 @@ import 'package:jobsitytvseries/data/models/get_episodes.dart' as epi;
 import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
 import 'package:jobsitytvseries/presentation/shared_widgets/custom_cont.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
+import 'package:jobsitytvseries/utils/device_utils.dart';
 
 class ShowDetails extends StatefulWidget {
   final mod.Data? showDetails;
@@ -49,7 +50,7 @@ class _ShowDetailsState extends State<ShowDetails> {
     return MainContainer(
       backAction: () {},
       child: Container(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             Card(
@@ -59,9 +60,22 @@ class _ShowDetailsState extends State<ShowDetails> {
                     children: [
                       SizedBox(
                         height: 200,
-                        child: Image.network(
-                          showDetails!.image!.original!,
-                          fit: BoxFit.fill,
+                        child: Stack(
+                          children: [
+                            Image.network(
+                              showDetails!.image!.original!,
+                              fit: BoxFit.fill,
+                              width: DeviceUtils.getScaledWidth(context, 1.0) * 0.35,
+                            ),
+                            Positioned(
+                              top: 5,
+                              right: 5,
+                              child: Icon(
+                                Icons.favorite_border_outlined,
+                                color: whiteColour,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       CustomLayout.lPad.sizedBoxW,
@@ -104,16 +118,15 @@ class _ShowDetailsState extends State<ShowDetails> {
                       )
                     ],
                   ),
-                  CustomLayout.lPad.sizedBoxH,
+                  CustomLayout.mPad.sizedBoxH,
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Html(
                       data: showDetails!.summary!,
                       style: {
                         "p": Style(
-                          color: appPrimaryColor,
-                          textAlign: TextAlign.justify
-                        ),
+                            color: appPrimaryColor,
+                            textAlign: TextAlign.justify),
                       },
                     ),
                     // Text(

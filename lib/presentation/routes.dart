@@ -6,6 +6,7 @@ import 'package:jobsitytvseries/data/models/get_episodes.dart';
 import 'package:jobsitytvseries/data/models/get_people.dart';
 import 'package:jobsitytvseries/data/models/get_shows.dart';
 import 'package:jobsitytvseries/presentation/screens/authoriser.dart';
+import 'package:jobsitytvseries/presentation/screens/favourite_shows.dart';
 import 'package:jobsitytvseries/presentation/screens/main_page.dart';
 import 'package:jobsitytvseries/presentation/screens/people_screen.dart';
 import 'package:jobsitytvseries/presentation/screens/show_details.dart';
@@ -75,6 +76,35 @@ class AppRouter {
               ),
             ],
             child: const MainPage(),
+          ),
+        );
+
+      case scrFavouriteShow:
+        return SlideRightRoute(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider<BaseCubit>(
+                lazy: false,
+                create: (BuildContext context) => BaseCubit(
+                    repository: repository,
+                    sharedPreference: sharedPreferenceApp),
+              ),
+              BlocProvider<GetseriesCubit>(
+                create: (BuildContext context) => GetseriesCubit(
+                  repository: repository,
+                  sharedPreference: sharedPreferenceApp,
+                  baseCubit: baseCubit,
+                ),
+              ),
+              BlocProvider<PeopleCubit>(
+                create: (BuildContext context) => PeopleCubit(
+                  repository: repository,
+                  sharedPreference: sharedPreferenceApp,
+                  baseCubit: baseCubit,
+                ),
+              ),
+            ],
+            child: const FavouriteShows(),
           ),
         );
       case scrPeopleScreen:
