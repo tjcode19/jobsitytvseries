@@ -10,8 +10,10 @@ import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
 import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/shimmer_widget.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/textinputs_widgets.dart';
 import 'package:jobsitytvseries/utils/device_utils.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PeopleScreen extends StatefulWidget {
   const PeopleScreen({Key? key}) : super(key: key);
@@ -72,23 +74,28 @@ class _PeopleScreenState extends State<PeopleScreen> {
                 });
               }
             },
-            child: SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 1.0) * 0.85,
-              child: GridView.builder(
-                  // key: _listKey,
-                  itemCount: peopleList.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 1.0,
-                          childAspectRatio: 0.7,
-                          mainAxisSpacing: 1.0),
-                  itemBuilder: (BuildContext context, int index) {
-                    return peopleItem(index);
-                  }),
-            ),
+            child: peopleList.isNotEmpty
+                ? SizedBox(
+                    height: DeviceUtils.getScaledHeight(context, 1.0) * 0.85,
+                    child: GridView.builder(
+                        // key: _listKey,
+                        itemCount: peopleList.length,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 1.0,
+                                childAspectRatio: 0.7,
+                                mainAxisSpacing: 1.0),
+                        itemBuilder: (BuildContext context, int index) {
+                          return peopleItem(index);
+                        }),
+                  )
+                : shimmerWidget(
+                    row: 7,
+                    height: (DeviceUtils.getScaledHeight(context, 1.0) * 0.85)
+                        .toDouble()),
           ),
           // CustomLayout.sPad.sizedBoxH,
         ],
@@ -103,6 +110,15 @@ class _PeopleScreenState extends State<PeopleScreen> {
       child: Card(
         child: Stack(
           children: [
+            Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              enabled: true,
+              child: Container(
+                width: double.infinity,
+                color: Colors.white,
+              ),
+            ),
             Image.network(
               peopleList[index].image != null
                   ? peopleList[index].image!.medium!

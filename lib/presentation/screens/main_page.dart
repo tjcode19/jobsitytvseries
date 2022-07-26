@@ -7,10 +7,9 @@ import 'package:jobsitytvseries/cubit/getseries_cubit.dart';
 import 'package:jobsitytvseries/cubit/people_cubit.dart';
 import 'package:jobsitytvseries/data/models/get_people.dart' as pop;
 import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
-import 'package:jobsitytvseries/presentation/shared_widgets/custom_cont.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/shimmer_widget.dart';
 import 'package:jobsitytvseries/presentation/shared_widgets/textinputs_widgets.dart';
 import 'package:jobsitytvseries/utils/device_utils.dart';
 import 'package:shimmer/shimmer.dart';
@@ -29,7 +28,6 @@ class _MainPageState extends State<MainPage> {
 
   List<pop.People> peopleList = [];
   var favShow = <int?>{};
-  bool _enabled = true;
 
   @override
   void initState() {
@@ -99,63 +97,10 @@ class _MainPageState extends State<MainPage> {
                           return items(index);
                         }),
                   )
-                : SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 1.0) * 0.6,
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      enabled: _enabled,
-                      child: ListView.builder(
-                        itemBuilder: (_, __) => Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                width: 48.0,
-                                height: 48.0,
-                                color: Colors.white,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      width: double.infinity,
-                                      height: 8.0,
-                                      color: Colors.white,
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 2.0),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 8.0,
-                                      color: Colors.white,
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 2.0),
-                                    ),
-                                    Container(
-                                      width: 40.0,
-                                      height: 8.0,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        itemCount: 7,
-                      ),
-                    ),
-                  ),
+                : shimmerWidget(
+                    row: 7,
+                    height: (DeviceUtils.getScaledHeight(context, 1.0) * 0.6)
+                        .toDouble()),
           ),
           CustomLayout.mPad.sizedBoxH,
           GestureDetector(
@@ -215,63 +160,7 @@ class _MainPageState extends State<MainPage> {
                           return peopleItem(index);
                         }),
                   )
-                : SizedBox(
-                    height: 120,
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      enabled: _enabled,
-                      child: ListView.builder(
-                        itemBuilder: (_, __) => Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                width: 48.0,
-                                height: 48.0,
-                                color: Colors.white,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      width: double.infinity,
-                                      height: 8.0,
-                                      color: Colors.white,
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 2.0),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 8.0,
-                                      color: Colors.white,
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 2.0),
-                                    ),
-                                    Container(
-                                      width: 40.0,
-                                      height: 8.0,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        itemCount: 1,
-                      ),
-                    ),
-                  ),
+                : shimmerWidget(height: 120.0),
           )
         ],
       ),
@@ -299,6 +188,15 @@ class _MainPageState extends State<MainPage> {
       child: Card(
         child: Stack(
           children: [
+            Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              enabled: true,
+              child: Container(
+                width: double.infinity,
+                color: Colors.white,
+              ),
+            ),
             Image.network(
               peopleList[index].image!.medium!,
               fit: BoxFit.fill,
@@ -310,10 +208,10 @@ class _MainPageState extends State<MainPage> {
               child: Container(
                 color: blackColor.withOpacity(0.7),
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
                   peopleList[index].name!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: whiteColour,
                   ),
                 ),
@@ -335,6 +233,15 @@ class _MainPageState extends State<MainPage> {
       child: Card(
         child: Stack(
           children: [
+            Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              enabled: true,
+              child: Container(
+                width: double.infinity,
+                color: Colors.white,
+              ),
+            ),
             Image.network(
               showList[index].image!.medium!,
               fit: BoxFit.fill,

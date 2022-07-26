@@ -23,14 +23,15 @@ class GetseriesCubit extends Cubit<GetseriesState> {
     emit(const GetShowSuccess(isLoading: true));
     var d = await getIdOfFavShows();
 
-
     await repository?.getShows(page).then(
       (apiCall) => {
         if (apiCall.responseCode != '00')
-          {
-          }
+          {}
         else
-          {emit(GetShowSuccess(getShows: apiCall.data, favs: d, isLoading: false))}
+          {
+            emit(GetShowSuccess(
+                getShows: apiCall.data, favs: d, isLoading: false))
+          }
       },
       onError: (error) {
         throw StateError('Get Beneficiary Failed $error');
@@ -88,6 +89,7 @@ class GetseriesCubit extends Cubit<GetseriesState> {
 
   favShows() async {
     List<Data>? saveFavShows = await (getFavouriteShows() ?? []);
+    saveFavShows!.sort((a, b) => a.name!.compareTo(b.name!));
     var d = await getIdOfFavShows();
 
     emit(GetShowSuccess(getShows: saveFavShows, favs: d));

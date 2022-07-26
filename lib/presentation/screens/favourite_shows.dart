@@ -136,10 +136,10 @@ class _FavouriteShowsState extends State<FavouriteShows> {
               child: Container(
                 color: blackColor.withOpacity(0.7),
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
                   showList[index].name!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: whiteColour,
                   ),
                 ),

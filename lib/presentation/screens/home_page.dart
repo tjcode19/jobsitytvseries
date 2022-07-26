@@ -1,15 +1,17 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jobsitytvseries/constants/colours.dart';
+import 'package:jobsitytvseries/constants/enums.dart';
 import 'package:jobsitytvseries/cubit/base_cubit.dart';
 import 'package:jobsitytvseries/cubit/getseries_cubit.dart';
 import 'package:jobsitytvseries/cubit/people_cubit.dart';
 import 'package:jobsitytvseries/data/network_services.dart';
 import 'package:jobsitytvseries/data/repository.dart';
 import 'package:jobsitytvseries/data/shared_preference.dart';
-import 'package:jobsitytvseries/presentation/screens/favourite_shows.dart';
 import 'package:jobsitytvseries/presentation/screens/main_page.dart';
 import 'package:jobsitytvseries/presentation/screens/people_screen.dart';
 
@@ -25,6 +27,30 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   BaseCubit? stActive;
+  int count = 0;
+
+  closeApp() {
+    if (_currentIndex == 0 && count == 0) {
+      BlocProvider.of<BaseCubit>(context).showError(
+          errorMsg: 'Tap back one more time to close app',
+          type: ErrorMsgType.toast,
+          toastPosition: EasyLoadingToastPosition.bottom);
+
+      setState(() {
+        count++;
+      });
+
+      Timer(const Duration(seconds: 5), () {
+        setState(() {
+          count = 0;
+        });
+      });
+    } else if (_currentIndex == 0 && count > 0) {
+      exit(0);
+    } else {
+      onTabTapped(0);
+    }
+  }
 
   void onTabTapped(int index) {
     if (index == 1) {
@@ -43,9 +69,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        exit(0);
-      },
+      onWillPop: () => closeApp(),
       child: Scaffold(
         body: BlocProvider(
             create: (_) => BaseCubit(),
