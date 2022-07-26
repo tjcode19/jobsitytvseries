@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jobsitytvseries/constants/colours.dart';
-import 'package:jobsitytvseries/constants/strings.dart';
-import 'package:jobsitytvseries/cubit/base_cubit.dart';
-import 'package:jobsitytvseries/utils/device_utils.dart';
+import '/constants/colours.dart';
+import '/constants/strings.dart';
+import '/cubit/base_cubit.dart';
+import '/utils/device_utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
                 width: DeviceUtils.getScaledWidth(context, 1.0) * 0.3,
                 height: DeviceUtils.getScaledHeight(context, 1.0) * 0.27,
-                child: Text(''),
+                child: const Text(''),
                 decoration: BoxDecoration(
                     // borderRadius: BorderRadius.circular(100),
                     color: appSecondaryColor.withOpacity(0.3),
@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
                 width: DeviceUtils.getScaledWidth(context, 1.0) * 0.5,
                 height: DeviceUtils.getScaledHeight(context, 1.0) * 0.25,
-                child: Text(''),
+                child: const Text(''),
                 decoration: BoxDecoration(
                     // borderRadius: BorderRadius.circular(100),
                     color: appPrimaryColor.withOpacity(0.3),
@@ -109,7 +109,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   Container(
                     height: 20,
-                    color: appPrimaryColor,
+                    color: appSecondaryColor,
                     width: DeviceUtils.getScaledWidth(context, 1.0),
                     child: const Center(
                       child: Text(

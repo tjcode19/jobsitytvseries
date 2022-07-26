@@ -4,16 +4,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:jobsitytvseries/constants/colours.dart';
-import 'package:jobsitytvseries/constants/enums.dart';
-import 'package:jobsitytvseries/cubit/base_cubit.dart';
-import 'package:jobsitytvseries/cubit/getseries_cubit.dart';
-import 'package:jobsitytvseries/cubit/people_cubit.dart';
-import 'package:jobsitytvseries/data/network_services.dart';
-import 'package:jobsitytvseries/data/repository.dart';
-import 'package:jobsitytvseries/data/shared_preference.dart';
-import 'package:jobsitytvseries/presentation/screens/main_page.dart';
-import 'package:jobsitytvseries/presentation/screens/people_screen.dart';
+import '/constants/colours.dart';
+import '/constants/enums.dart';
+import '/cubit/base_cubit.dart';
+import '/cubit/getseries_cubit.dart';
+import '/cubit/people_cubit.dart';
+import '/data/network_services.dart';
+import '/data/repository.dart';
+import '/data/shared_preference.dart';
+import '/presentation/screens/main_page.dart';
+import '/presentation/screens/people_screen.dart';
 
 import 'settings.dart';
 
@@ -53,9 +53,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onTabTapped(int index) {
-    if (index == 1) {
-      // MyTransactions.globalKey.currentState!.listItems();
-    }
     setState(() {
       _currentIndex = index;
     });
@@ -78,10 +75,6 @@ class _HomePageState extends State<HomePage> {
                 return IndexedStack(
                   index: _currentIndex,
                   children: [
-                    // BlocProvider(
-                    //   create: (context) => DashHomeCubit(),
-                    //   child: DashboardHome(),
-                    // ),
                     MultiBlocProvider(providers: [
                       BlocProvider<BaseCubit>(
                         lazy: false,
@@ -131,7 +124,6 @@ class _HomePageState extends State<HomePage> {
                               sharedPreference: SharedPreferenceApp()),
                         ),
                       ],
-                      // create: (context) => SubjectBloc(),
                       child: const Settings(),
                     )
                   ],
@@ -148,11 +140,10 @@ class _HomePageState extends State<HomePage> {
     return BottomNavigationBar(
       onTap: onTabTapped,
       currentIndex: _currentIndex,
-      // this will be set when a new tab is tapped
-      items: [
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
-          activeIcon: const Icon(
+          activeIcon:  Icon(
             Icons.home,
             color: appSecondaryColor,
           ),
@@ -165,7 +156,7 @@ class _HomePageState extends State<HomePage> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings_outlined),
-          activeIcon: const Icon(Icons.settings),
+          activeIcon: Icon(Icons.settings),
           label: 'Settings',
         )
       ],

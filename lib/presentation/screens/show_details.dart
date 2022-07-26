@@ -1,22 +1,19 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:jobsitytvseries/constants/colours.dart';
-import 'package:jobsitytvseries/constants/enums.dart';
-import 'package:jobsitytvseries/constants/strings.dart';
-import 'package:jobsitytvseries/cubit/getseries_cubit.dart';
-import 'package:jobsitytvseries/data/models/get_episodes.dart' as epi;
-import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
-import 'package:jobsitytvseries/presentation/shared_widgets/custom_cont.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/shimmer_widget.dart';
-import 'package:jobsitytvseries/utils/device_utils.dart';
-import 'package:shimmer/shimmer.dart';
+import '/constants/colours.dart';
+import '/constants/enums.dart';
+import '/constants/strings.dart';
+import '/cubit/getseries_cubit.dart';
+import '/data/models/get_episodes.dart' as epi;
+import '/data/models/get_shows.dart' as mod;
+import '/data/models/season_model.dart';
+import '/presentation/shared_widgets/custom_cont.dart';
+import '/presentation/shared_widgets/screen_title.dart';
+import '/presentation/shared_widgets/secured_main_container.dart';
+import '/presentation/shared_widgets/shimmer_widget.dart';
+import '/utils/device_utils.dart';
 
 class ShowDetails extends StatefulWidget {
   final mod.Data? showDetails;
@@ -234,9 +231,4 @@ class _ShowDetailsState extends State<ShowDetails> {
   }
 }
 
-class Season {
-  int? id;
-  List<epi.Episodes>? epis;
 
-  Season({this.id, this.epis});
-}

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:jobsitytvseries/constants/colours.dart';
-import 'package:jobsitytvseries/constants/enums.dart';
-import 'package:jobsitytvseries/data/models/get_episodes.dart' as Ep;
-import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
+import '/constants/colours.dart';
+import '/constants/enums.dart';
+import '/data/models/get_episodes.dart' as ep;
+import '/presentation/shared_widgets/screen_title.dart';
+import '/presentation/shared_widgets/secured_main_container.dart';
 
 class EpisodeDetails extends StatefulWidget {
-  final Ep.Episodes? episodeDetails;
+  final ep.Episodes? episodeDetails;
   const EpisodeDetails({Key? key, this.episodeDetails}) : super(key: key);
 
   @override
@@ -16,7 +15,7 @@ class EpisodeDetails extends StatefulWidget {
 }
 
 class _EpisodeDetailsState extends State<EpisodeDetails> {
-  Ep.Episodes? episodesDetails;
+  ep.Episodes? episodesDetails;
 
   @override
   void initState() {
@@ -28,12 +27,13 @@ class _EpisodeDetailsState extends State<EpisodeDetails> {
   @override
   Widget build(BuildContext context) {
     return SecuredMainContainer(
-        pageLabel: ScreenTitle(
-          title: episodesDetails!.name!,
-          isBackButton: true,
-        ),
-        pageLabelIcon: Container(),
-        child: Column(children: [
+      pageLabel: ScreenTitle(
+        title: episodesDetails!.name!,
+        isBackButton: true,
+      ),
+      pageLabelIcon: Container(),
+      child: Column(
+        children: [
           Card(
             child: Column(
               children: [
@@ -63,7 +63,6 @@ class _EpisodeDetailsState extends State<EpisodeDetails> {
                               RichText(
                                 text: TextSpan(
                                   text: 'Season ${episodesDetails!.season}',
-                                  
                                   children: [
                                     TextSpan(
                                       text:
@@ -97,14 +96,12 @@ class _EpisodeDetailsState extends State<EpisodeDetails> {
                           color: appPrimaryColor, textAlign: TextAlign.justify),
                     },
                   ),
-                  // Text(
-                  //   episodesDetails!.summary!,
-                  //   textAlign: TextAlign.justify,
-                  // ),
                 ),
               ],
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }

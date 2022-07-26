@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jobsitytvseries/constants/colours.dart';
-import 'package:jobsitytvseries/constants/enums.dart';
-import 'package:jobsitytvseries/constants/strings.dart';
-import 'package:jobsitytvseries/cubit/getseries_cubit.dart';
-import 'package:jobsitytvseries/cubit/people_cubit.dart';
-import 'package:jobsitytvseries/data/models/get_people.dart' as pop;
-import 'package:jobsitytvseries/data/models/get_shows.dart' as mod;
-import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/shimmer_widget.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/textinputs_widgets.dart';
-import 'package:jobsitytvseries/utils/device_utils.dart';
+import '/constants/colours.dart';
+import '/constants/enums.dart';
+import '/constants/strings.dart';
+import '/cubit/getseries_cubit.dart';
+import '/cubit/people_cubit.dart';
+import '/data/models/get_people.dart' as pop;
+import '/data/models/get_shows.dart' as mod;
+import '/presentation/shared_widgets/screen_title.dart';
+import '/presentation/shared_widgets/secured_main_container.dart';
+import '/presentation/shared_widgets/shimmer_widget.dart';
+import '/presentation/shared_widgets/textinputs_widgets.dart';
+import '/utils/device_utils.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MainPage extends StatefulWidget {

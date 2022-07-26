@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:jobsitytvseries/constants/enums.dart';
-import 'package:jobsitytvseries/cubit/base_cubit.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/otp_widget.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
-import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
-import 'package:jobsitytvseries/utils/device_utils.dart';
+import '/constants/enums.dart';
+import '/cubit/base_cubit.dart';
+import '/presentation/shared_widgets/otp_widget.dart';
+import '/presentation/shared_widgets/screen_title.dart';
+import '/presentation/shared_widgets/secured_main_container.dart';
+import '/utils/device_utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Settings extends StatefulWidget {

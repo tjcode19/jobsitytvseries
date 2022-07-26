@@ -105,7 +105,7 @@ class _AuthoriserState extends State<Authoriser> {
                               TextSpan(
                                 text: ' Continue',
                                 style: TextStyle(
-                                  color: appPrimaryColor,
+                                  color: appSecondaryColor,
                                 ),
                               )
                             ],
@@ -174,7 +174,7 @@ class _AuthoriserState extends State<Authoriser> {
                               TextSpan(
                                 text: ' Reset Now',
                                 style: TextStyle(
-                                  color: appPrimaryColor,
+                                  color: appSecondaryColor,
                                 ),
                               )
                             ],
