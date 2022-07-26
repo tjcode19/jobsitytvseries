@@ -1,10 +1,10 @@
 # jobsitytvseries
 
-A new Flutter project.
+Jobsity TV Series Tes .
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Flutter application for listing TV Series .
 
 A few resources to get you started if this is your first Flutter project:
 
