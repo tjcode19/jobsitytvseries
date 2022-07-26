@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:jobsitytvseries/data/models/get_featured_series.dart';
 import 'package:jobsitytvseries/data/models/get_people.dart';
 import 'package:jobsitytvseries/data/repository.dart';
 import 'package:jobsitytvseries/data/shared_preference.dart';
+import 'package:jobsitytvseries/presentation/screens/show_details.dart';
 
 import 'base_cubit.dart';
 
@@ -17,13 +19,11 @@ class PeopleCubit extends Cubit<PeopleState> {
       : super(PeopleInitial());
 
   getPeople({page = 0}) async {
-    // emit(SendMoneyOtherBanks(acctName: ''));
-
     await repository?.getPeople(page).then(
       (apiCall) => {
         if (apiCall.responseCode != '00')
           {
-            // emit(DashHomeInitial(status: 'failed'))
+            
           }
         else
           {
@@ -31,8 +31,24 @@ class PeopleCubit extends Cubit<PeopleState> {
           }
       },
       onError: (error) {
-        // emit(DashHomeInitial(status: 'failed'));
-        throw StateError('Get Beneficiary Failed $error');
+        throw StateError('Get People Failed $error');
+      },
+    );
+  }
+
+  getFeaturesSeries({personId}) async {
+    await repository?.getFeaturedSeries(personId).then(
+      (apiCall) => {
+        if (apiCall.responseCode != '00')
+          {
+          }
+        else
+          {
+            emit(GetFeaturedSuccess(featuredShows: apiCall.showsDetails))
+          }
+      },
+      onError: (error) {
+        throw StateError('Get Features Series Failed $error');
       },
     );
   }

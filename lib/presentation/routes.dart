@@ -165,8 +165,8 @@ class AppRouter {
                     repository: repository,
                     sharedPreference: sharedPreferenceApp),
               ),
-              BlocProvider<GetseriesCubit>(
-                create: (BuildContext context) => GetseriesCubit(
+              BlocProvider<PeopleCubit>(
+                create: (BuildContext context) => PeopleCubit(
                   repository: repository,
                   sharedPreference: sharedPreferenceApp,
                   baseCubit: baseCubit,

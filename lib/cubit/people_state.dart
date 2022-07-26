@@ -16,3 +16,11 @@ class GetPeopleSuccess extends PeopleState {
   @override
   List<Object> get props => [getPeople ?? []];
 }
+
+class GetFeaturedSuccess extends PeopleState {
+  final List<ShowsDetails>? featuredShows;
+  const GetFeaturedSuccess({this.featuredShows});
+
+  @override
+  List<Object> get props => [featuredShows ?? []];
+}

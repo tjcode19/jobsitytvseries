@@ -47,4 +47,19 @@ class NetworkService {
     }
     return res;
   }
+
+  Future<dynamic> getFeaturedSeries(personId) async {
+    dynamic res;
+    try {
+      final response = await apiProvider.get('people/$personId/castcredits?embed=show');
+      if (response != []) {
+        res = {'responseCode': '00', 'showsDetails': response};
+      } else {
+        res = {'responseCode': '01', 'showsDetails': []};
+      }
+    } catch (e) {
+      return {'responseCode': '08', 'responseDescription': 'error dey $e'};
+    }
+    return res;
+  }
 }
