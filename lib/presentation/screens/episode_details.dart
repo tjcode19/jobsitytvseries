@@ -4,6 +4,8 @@ import 'package:jobsitytvseries/constants/colours.dart';
 import 'package:jobsitytvseries/constants/enums.dart';
 import 'package:jobsitytvseries/data/models/get_episodes.dart' as Ep;
 import 'package:jobsitytvseries/presentation/shared_widgets/main_page_container.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/screen_title.dart';
+import 'package:jobsitytvseries/presentation/shared_widgets/secured_main_container.dart';
 
 class EpisodeDetails extends StatefulWidget {
   final Ep.Episodes? episodeDetails;
@@ -25,82 +27,84 @@ class _EpisodeDetailsState extends State<EpisodeDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return MainContainer(
-        backAction: () {},
-        child: Container(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(children: [
-              Card(
-                child: Column(
+    return SecuredMainContainer(
+        pageLabel: ScreenTitle(
+          title: episodesDetails!.name!,
+          isBackButton: true,
+        ),
+        pageLabelIcon: Container(),
+        child: Column(children: [
+          Card(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 200,
+                  child: Image.network(
+                    episodesDetails!.image!.medium!,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                CustomLayout.lPad.sizedBoxH,
+                Row(
                   children: [
-                    SizedBox(
-                      height: 200,
-                      child: Image.network(
-                        episodesDetails!.image!.medium!,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    CustomLayout.lPad.sizedBoxH,
-                    Row(
-                      children: [
-                        CustomLayout.lPad.sizedBoxW,
-                        Expanded(
-                          child: Column(
+                    CustomLayout.lPad.sizedBoxW,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            episodesDetails!.name!,
+                            style: const TextStyle(fontSize: 24),
+                          ),
+                          CustomLayout.lPad.sizedBoxH,
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                episodesDetails!.name!,
-                                style: const TextStyle(fontSize: 24),
-                              ),
-                              CustomLayout.lPad.sizedBoxH,
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Season ${episodesDetails!.season}',
-                                      children: [
-                                        TextSpan(
-                                          text:
-                                              ' Episode ${episodesDetails!.number}',
-                                          style: const TextStyle(
-                                            color: appPrimaryColor,
-                                          ),
-                                        )
-                                      ],
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Season ${episodesDetails!.season}',
+                                  
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          ' Episode ${episodesDetails!.number}',
                                       style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: bodyTextColor,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              CustomLayout.lPad.sizedBoxH,
+                                          color: appPrimaryColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    )
+                                  ],
+                                  style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                    color: bodyTextColor,
+                                  ),
+                                ),
+                              )
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Html(
-                        data: episodesDetails!.summary!,
-                        style: {
-                          "p": Style(
-                              color: appPrimaryColor,
-                              textAlign: TextAlign.justify),
-                        },
+                        ],
                       ),
-                      // Text(
-                      //   episodesDetails!.summary!,
-                      //   textAlign: TextAlign.justify,
-                      // ),
-                    ),
+                    )
                   ],
                 ),
-              ),
-            ])));
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Html(
+                    data: episodesDetails!.summary!,
+                    style: {
+                      "p": Style(
+                          color: appPrimaryColor, textAlign: TextAlign.justify),
+                    },
+                  ),
+                  // Text(
+                  //   episodesDetails!.summary!,
+                  //   textAlign: TextAlign.justify,
+                  // ),
+                ),
+              ],
+            ),
+          ),
+        ]));
   }
 }

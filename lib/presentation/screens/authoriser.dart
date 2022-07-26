@@ -43,7 +43,6 @@ class _AuthoriserState extends State<Authoriser> {
         },
         builder: (context, state) {
           if (state is IsFirstTimer) {
-            print(state.val!);
             if (state.val!) {
               return SizedBox(
                 width: DeviceUtils.getScaledWidth(context, 0.75),

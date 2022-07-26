@@ -71,11 +71,16 @@ class GetseriesCubit extends Cubit<GetseriesState> {
 
   savefav({data}) async {
     List<Data> saveFavShows = await (getFavouriteShows() ?? []);
+
     saveFavShows.add(data);
     sharedPreference!.setData(
         sharedType: spDataType.object,
         fieldName: 'favShows',
         fieldValue: saveFavShows);
+
+    var d = await getIdOfFavShows();
+
+    emit(UpdateFav(favs: d));
   }
 
   deletefav({Data? data}) async {
@@ -85,6 +90,10 @@ class GetseriesCubit extends Cubit<GetseriesState> {
         sharedType: spDataType.object,
         fieldName: 'favShows',
         fieldValue: saveFavShows);
+
+    var d = await getIdOfFavShows();
+
+    emit(UpdateFav(favs: d));
   }
 
   favShows() async {

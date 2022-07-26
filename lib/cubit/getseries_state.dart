@@ -26,3 +26,13 @@ class GetEpisodesSuccess extends GetseriesState {
   @override
   List<Object> get props => [getEpisodes ?? []];
 }
+
+class UpdateFav extends GetseriesState {
+  final Set<int>? favs;
+  const UpdateFav({this.favs});
+
+  @override
+  List<Object> get props => [favs ?? []];
+}
+
+

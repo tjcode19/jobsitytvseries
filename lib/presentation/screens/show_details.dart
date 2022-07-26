@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:jobsitytvseries/constants/colours.dart';
@@ -44,11 +45,11 @@ class _ShowDetailsState extends State<ShowDetails> {
     String days = '';
     String genre = '';
     for (var element in showDetails!.schedule!.days!) {
-      days += element + ",";
+      days += element + ", ";
     }
 
     for (var element in showDetails!.genres!) {
-      genre += element + ",";
+      genre += element + ", ";
     }
 
     return SecuredMainContainer(
@@ -57,7 +58,6 @@ class _ShowDetailsState extends State<ShowDetails> {
         isBackButton: true,
       ),
       pageLabelIcon: Container(),
-      
       child: Column(
         children: [
           Card(
@@ -66,28 +66,18 @@ class _ShowDetailsState extends State<ShowDetails> {
                 Row(
                   children: [
                     SizedBox(
-                      height: 200,
+                      height: 180,
                       child: Stack(
                         children: [
                           shimmerImage(
-                            width: DeviceUtils.getScaledWidth(context, 1.0) *
-                                0.35,
+                            width:
+                                DeviceUtils.getScaledWidth(context, 1.0) * 0.35,
                           ),
                           Image.network(
                             showDetails!.image!.original!,
                             fit: BoxFit.fill,
-                            width: DeviceUtils.getScaledWidth(context, 1.0) *
-                                0.35,
-                          ),
-                          Positioned(
-                            top: 5,
-                            right: 5,
-                            child: Icon(
-                              showDetails!.isfav! == true
-                                  ? Icons.favorite
-                                  : Icons.favorite_border_outlined,
-                              color: whiteColour,
-                            ),
+                            width:
+                                DeviceUtils.getScaledWidth(context, 1.0) * 0.35,
                           ),
                         ],
                       ),
@@ -105,16 +95,26 @@ class _ShowDetailsState extends State<ShowDetails> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('Day & Time'),
+                              const Text('Time'),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    color: Colors.red,
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(showDetails!.schedule!.time!),
+                                  CustomCont(
+                                    bgColor: Colors.red,
+                                    vPadding: 8.0,
+                                    child: Text(
+                                      showDetails!.schedule!.time!,
+                                      style:
+                                          const TextStyle(color: whiteColour),
+                                    ),
                                   ),
-                                  Text('$days '),
+                                  CustomLayout.lPad.sizedBoxH,
+                                  const Text('Day(s)'),
+                                  Text(
+                                    '$days ',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ],
                               ),
                             ],
@@ -123,8 +123,12 @@ class _ShowDetailsState extends State<ShowDetails> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Genre'),
-                              Text('$genre '),
+                              const Text('Genre'),
+                              Text(
+                                '$genre ',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ],
@@ -132,15 +136,13 @@ class _ShowDetailsState extends State<ShowDetails> {
                     )
                   ],
                 ),
-                CustomLayout.mPad.sizedBoxH,
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Html(
                     data: showDetails!.summary!,
                     style: {
                       "p": Style(
-                          color: appPrimaryColor,
-                          textAlign: TextAlign.justify),
+                          color: appPrimaryColor, textAlign: TextAlign.justify),
                     },
                   ),
                   // Text(
@@ -151,7 +153,7 @@ class _ShowDetailsState extends State<ShowDetails> {
               ],
             ),
           ),
-          CustomLayout.lPad.sizedBoxH,
+          CustomLayout.mPad.sizedBoxH,
           BlocBuilder<GetseriesCubit, GetseriesState>(
             buildWhen: (old, newState) {
               return old != newState;
@@ -173,40 +175,49 @@ class _ShowDetailsState extends State<ShowDetails> {
                   seasons!.add(Season(id: element, epis: result));
                 }
               }
-              return Column(
-                children: seasons!.map((s) {
-                  return Container(
-                    child: Card(
-                      child: ListTile(
-                        title: Text('Season ${s.id.toString()}'),
-                        subtitle: Wrap(
-                          children: [
-                            ...s.epis!.map(
-                              (val) => CustomCont(
-                                action: () {
-                                  Navigator.pushNamed(
-                                      context, scrEpisodeDetails,
-                                      arguments: val);
-                                },
-                                hMargin: 5.0,
-                                vMargin: 6.0,
-                                bgColor: appSecondaryColor,
-                                shadow: false,
-                                child: Text(
-                                  val.number.toString(),
-                                  style: const TextStyle(color: whiteColour),
-                                ),
+              return Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...seasons!.map((s) {
+                        return Container(
+                          child: Card(
+                            child: ListTile(
+                              title: Text('Season ${s.id.toString()}'),
+                              subtitle: Wrap(
+                                children: [
+                                  ...s.epis!.map(
+                                    (val) => CustomCont(
+                                      action: () {
+                                        Navigator.pushNamed(
+                                            context, scrEpisodeDetails,
+                                            arguments: val);
+                                      },
+                                      hMargin: 5.0,
+                                      vMargin: 6.0,
+                                      bgColor: appSecondaryColor,
+                                      shadow: false,
+                                      child: Text(
+                                        val.number.toString(),
+                                        style:
+                                            const TextStyle(color: whiteColour),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      CustomLayout.lPad.sizedBoxH,
+                    ],
+                  ),
+                ),
               );
             },
           ),
+          CustomLayout.lPad.sizedBoxH,
         ],
       ),
     );

@@ -94,7 +94,17 @@ class _MainPageState extends State<MainPage> {
                                 childAspectRatio: 0.7,
                                 mainAxisSpacing: 1.0),
                         itemBuilder: (BuildContext context, int index) {
-                          return items(index);
+                          return BlocBuilder<GetseriesCubit, GetseriesState>(
+                            buildWhen: (prevState, state) {
+                              return prevState != state;
+                            },
+                            builder: (context, state) {
+                              if (state is UpdateFav) {
+                                favShow = state.favs!;
+                              }
+                              return items(index);
+                            },
+                          );
                         }),
                   )
                 : shimmerWidget(
@@ -106,9 +116,9 @@ class _MainPageState extends State<MainPage> {
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, scrPeopleScreen),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: const [
-                Icon(Icons.find_in_page_outlined),
+                Icon(Icons.find_in_page_outlined, color: appSecondaryColor),
                 Text(
                   'Search more people',
                   textAlign: TextAlign.right,
@@ -226,6 +236,8 @@ class _MainPageState extends State<MainPage> {
   Widget items(int index) {
     if (favShow.contains(showList[index].id)) {
       showList[index].isfav = true;
+    } else {
+      showList[index].isfav = false;
     }
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, scrShowDetails,
@@ -253,10 +265,10 @@ class _MainPageState extends State<MainPage> {
               child: Container(
                 color: blackColor.withOpacity(0.7),
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
                   showList[index].name!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: whiteColour,
                   ),
                 ),
@@ -270,26 +282,22 @@ class _MainPageState extends State<MainPage> {
                   if (showList[index].isfav!) {
                     BlocProvider.of<GetseriesCubit>(context)
                         .deletefav(data: showList[index]);
-                    setState(() {
-                      showList[index].isfav = false;
-                    });
                   } else {
                     BlocProvider.of<GetseriesCubit>(context)
                         .savefav(data: showList[index]);
-
-                    setState(() {
-                      showList[index].isfav = true;
-                    });
                   }
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    !showList[index].isfav!
-                        ? Icons.favorite_border_outlined
-                        : Icons.favorite,
-                    color: whiteColour,
-                  ),
+                  child: (showList[index].isfav!)
+                      ? const Icon(
+                          Icons.favorite,
+                          color: whiteColour,
+                        )
+                      : const Icon(
+                          Icons.favorite_border_outlined,
+                          color: whiteColour,
+                        ),
                 ),
               ),
             ),

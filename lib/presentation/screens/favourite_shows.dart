@@ -78,19 +78,35 @@ class _FavouriteShowsState extends State<FavouriteShows> {
             },
             child: SizedBox(
               height: DeviceUtils.getScaledHeight(context, 1.0) * 0.8,
-              child: GridView.builder(
-                  // key: _listKey,
-                  itemCount: showList.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 1.0,
-                      childAspectRatio: 0.7,
-                      mainAxisSpacing: 1.0),
-                  itemBuilder: (BuildContext context, int index) {
-                    return items(index);
-                  }),
+              child: showList.isNotEmpty
+                  ? GridView.builder(
+                      // key: _listKey,
+                      itemCount: showList.length,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 1.0,
+                              childAspectRatio: 0.7,
+                              mainAxisSpacing: 1.0),
+                      itemBuilder: (BuildContext context, int index) {
+                        return BlocBuilder<GetseriesCubit, GetseriesState>(
+                          buildWhen: (prevState, state) {
+                            return prevState != state;
+                          },
+                          builder: (context, state) {
+                            if (state is UpdateFav) {
+                              favShow = state.favs!;
+                            }
+                            return items(index);
+                          },
+                        );
+                      },
+                    )
+                  : const Center(
+                      child: Text('You do not have any favourite show'),
+                    ),
             ),
           ),
           CustomLayout.mPad.sizedBoxH,
@@ -116,9 +132,6 @@ class _FavouriteShowsState extends State<FavouriteShows> {
   }
 
   Widget items(int index) {
-    if (favShow.contains(showList[index].id)) {
-      showList[index].isfav = true;
-    }
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, scrShowDetails,
           arguments: showList[index]),
@@ -150,30 +163,20 @@ class _FavouriteShowsState extends State<FavouriteShows> {
               right: 5,
               child: GestureDetector(
                 onTap: () {
-                  if (showList[index].isfav!) {
-                    BlocProvider.of<GetseriesCubit>(context)
-                        .deletefav(data: showList[index]);
-                    setState(() {
-                      showList[index].isfav = false;
-                    });
-                  } else {
-                    BlocProvider.of<GetseriesCubit>(context)
-                        .savefav(data: showList[index]);
+                  BlocProvider.of<GetseriesCubit>(context)
+                      .deletefav(data: showList[index]);
 
-                    setState(() {
-                      showList[index].isfav = true;
-                    });
-                  }
+                  setState(() {
+                    showList
+                        .removeWhere((item) => item.id == showList[index].id);
+                  });
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    !showList[index].isfav!
-                        ? Icons.favorite_border_outlined
-                        : Icons.favorite,
-                    color: whiteColour,
-                  ),
-                ),
+                child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.favorite,
+                      color: whiteColour,
+                    )),
               ),
             ),
           ],
