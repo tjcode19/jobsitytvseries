@@ -75,17 +75,20 @@ class _PeopleDetailsState extends State<PeopleDetails> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CustomCont(
-                                    bgColor: peopleDetails!.gender! == 'Male'
-                                        ? appSecondaryColor
-                                        : Colors.pink,
-                                    vPadding: 8.0,
-                                    child: Text(
-                                      peopleDetails!.gender!,
-                                      style:
-                                          const TextStyle(color: whiteColour),
-                                    ),
-                                  ),
+                                  peopleDetails!.gender != null
+                                      ? CustomCont(
+                                          bgColor:
+                                              peopleDetails!.gender! == 'Male'
+                                                  ? appSecondaryColor
+                                                  : Colors.pink,
+                                          vPadding: 8.0,
+                                          child: Text(
+                                            peopleDetails!.gender!,
+                                            style: const TextStyle(
+                                                color: whiteColour),
+                                          ),
+                                        )
+                                      : const Text('NA'),
                                 ],
                               ),
                             ],
@@ -125,71 +128,80 @@ class _PeopleDetailsState extends State<PeopleDetails> {
             builder: (buildContext, state) {
               if (state is GetFeaturedSuccess) {
                 shows = state.featuredShows;
-              }
-              return shows!.isNotEmpty
-                  ? SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 0.5),
-                      child: SingleChildScrollView(
-                        child: Wrap(
-                          children: [
-                            ...shows!.map(
-                              (val) => Card(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          height: 120,
-                                          width: 80,
-                                          child: Image.network(
-                                            val.eEmbedded!.show!.image!.medium!,
-                                            fit: BoxFit.fill,
+
+                return shows!.isNotEmpty
+                    ? SizedBox(
+                        height: DeviceUtils.getScaledHeight(context, 0.5),
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            children: [
+                              ...shows!.map(
+                                (val) => Card(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 120,
+                                            width: 80,
+                                            child: Image.network(
+                                              val.eEmbedded!.show!.image!
+                                                  .medium!,
+                                              fit: BoxFit.fill,
+                                            ),
                                           ),
-                                        ),
-                                        CustomLayout.lPad.sizedBoxW,
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                val.eEmbedded!.show!.name!,
-                                                style: const TextStyle(
-                                                    fontSize: 18),
-                                              ),
-                                              CustomLayout.mPad.sizedBoxH,
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text('URL'),
-                                                  Text(
-                                                    '${val.eEmbedded!.show!.url}',
-                                                    style: const TextStyle(
-                                                        color: appPrimaryColor,
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                                          CustomLayout.lPad.sizedBoxW,
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  val.eEmbedded!.show!.name!,
+                                                  style: const TextStyle(
+                                                      fontSize: 18),
+                                                ),
+                                                CustomLayout.mPad.sizedBoxH,
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text('URL'),
+                                                    Text(
+                                                      '${val.eEmbedded!.show!.url}',
+                                                      style: const TextStyle(
+                                                          color:
+                                                              appPrimaryColor,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  : shimmerWidget(
-                      row: 7,
-                      height: (DeviceUtils.getScaledHeight(context, 1.0) * 0.5)
-                          .toDouble());
+                      )
+                    : Column(
+                        children: [
+                          CustomLayout.xxlPad.sizedBoxH,
+                          const Text('No record found'),
+                        ],
+                      );
+              }
+              return shimmerWidget(
+                  row: 7,
+                  height: (DeviceUtils.getScaledHeight(context, 1.0) * 0.5)
+                      .toDouble());
             },
           ),
         ],
